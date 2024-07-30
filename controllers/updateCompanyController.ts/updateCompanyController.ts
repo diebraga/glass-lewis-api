@@ -30,7 +30,6 @@ export const updateCompanyController = async (
     console.log("Controller: Update successful");
     return res.status(200).json(result);
   } catch (error: any) {
-    console.error("Controller: Error updating company:", error.message);
 
     if (error.message === "Company not found!") {
       return res.status(404).json({ error: error.message });
