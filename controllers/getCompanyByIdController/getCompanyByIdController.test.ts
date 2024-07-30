@@ -1,30 +1,12 @@
+import { NextApiRequest, NextApiResponse } from "next";
+import { getCompanyByIdController } from "../../controllers/getCompanyByIdController/getCompanyByIdController";
 import { getCompanyByIdService } from "../../services/getCompanyByIdService/getCompanyByIdService";
-import pool from "../../lib/db";
+import { createMocks } from "node-mocks-http";
 
-jest.mock("../../lib/db", () => ({
-  query: jest.fn(),
-}));
+jest.mock("../../services/getCompanyByIdService/getCompanyByIdService");
 
-describe("getCompanyByIdService", () => {
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
-
-  it("should throw an error if companyId is not provided", async () => {
-    await expect(getCompanyByIdService(null as any)).rejects.toThrow(
-      "Company ID must be provided!"
-    );
-  });
-
-  it("should throw an error if company is not found", async () => {
-    (pool.query as jest.Mock).mockResolvedValueOnce({ rows: [] });
-
-    await expect(getCompanyByIdService(1)).rejects.toThrow(
-      "Company not found!"
-    );
-  });
-
-  it("should return company details if company is found", async () => {
+describe("getCompanyByIdController", () => {
+  it("should return 200 and company details if company is found", async () => {
     const mockCompany = {
       id: 1,
       name: "Test Company",
@@ -33,24 +15,68 @@ describe("getCompanyByIdService", () => {
       isin: "US1234567890",
       website_url: "https://testcompany.com",
       user_id: 1,
-      created_at: new Date(),
-      updated_at: new Date(),
+      created_at: "2024-07-30T18:51:06.717Z",
+      updated_at: "2024-07-30T18:51:06.717Z",
     };
 
-    (pool.query as jest.Mock).mockResolvedValueOnce({ rows: [mockCompany] });
+    (getCompanyByIdService as jest.Mock).mockResolvedValue(mockCompany);
 
-    const result = await getCompanyByIdService(1);
+    const { req, res } = createMocks<NextApiRequest, NextApiResponse>({
+      method: "GET",
+      query: { id: "1" },
+    });
 
-    expect(result).toEqual({
-      id: mockCompany.id,
-      name: mockCompany.name,
-      stock_ticker: mockCompany.stock_ticker,
-      exchange: mockCompany.exchange,
-      isin: mockCompany.isin,
-      website_url: mockCompany.website_url,
-      user_id: mockCompany.user_id,
-      created_at: mockCompany.created_at,
-      updated_at: mockCompany.updated_at,
+    await getCompanyByIdController(req, res);
+
+    expect(res._getStatusCode()).toBe(200);
+    expect(JSON.parse(res._getData())).toEqual(mockCompany);
+  });
+
+  it("should return 400 if company ID is not provided", async () => {
+    const { req, res } = createMocks<NextApiRequest, NextApiResponse>({
+      method: "GET",
+      query: {},
+    });
+
+    await getCompanyByIdController(req, res);
+
+    expect(res._getStatusCode()).toBe(400);
+    expect(JSON.parse(res._getData())).toEqual({
+      error: "Company ID must be provided!",
+    });
+  });
+
+  it("should return 404 if company is not found", async () => {
+    (getCompanyByIdService as jest.Mock).mockRejectedValue(
+      new Error("Company not found!")
+    );
+
+    const { req, res } = createMocks<NextApiRequest, NextApiResponse>({
+      method: "GET",
+      query: { id: "999" },
+    });
+
+    await getCompanyByIdController(req, res);
+
+    expect(res._getStatusCode()).toBe(404);
+    expect(JSON.parse(res._getData())).toEqual({ error: "Company not found!" });
+  });
+
+  it("should return 500 on internal server error", async () => {
+    (getCompanyByIdService as jest.Mock).mockRejectedValue(
+      new Error("Internal server error")
+    );
+
+    const { req, res } = createMocks<NextApiRequest, NextApiResponse>({
+      method: "GET",
+      query: { id: "1" },
+    });
+
+    await getCompanyByIdController(req, res);
+
+    expect(res._getStatusCode()).toBe(500);
+    expect(JSON.parse(res._getData())).toEqual({
+      error: "Internal server error",
     });
   });
 });

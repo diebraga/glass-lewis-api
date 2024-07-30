@@ -7,13 +7,15 @@ export const getCompanyByIdController = async (
 ) => {
   const { id } = req.query;
 
+  if (!id) {
+    return res.status(400).json({ error: "Company ID must be provided!" });
+  }
+
   try {
     const result = await getCompanyByIdService(Number(id));
     return res.status(200).json(result);
   } catch (error: any) {
-    if (error.message === "Company ID must be provided!") {
-      return res.status(400).json({ error: error.message });
-    } else if (error.message === "Company not found!") {
+    if (error.message === "Company not found!") {
       return res.status(404).json({ error: error.message });
     } else {
       return res.status(500).json({ error: "Internal server error" });
