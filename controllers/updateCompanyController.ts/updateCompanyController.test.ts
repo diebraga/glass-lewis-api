@@ -5,7 +5,7 @@ import { updateCompanyController } from "./updateCompanyController";
 jest.mock("../../services/updateCompanyService/updateCompanyService");
 
 describe("updateCompanyController", () => {
-  it("should return 405 if method is not POST", async () => {
+  it("should return 405 if method is not PUT", async () => {
     const { req, res } = createMocks({
       method: "GET",
     });
@@ -21,7 +21,7 @@ describe("updateCompanyController", () => {
     );
 
     const { req, res } = createMocks({
-      method: "POST",
+      method: "PUT",
       body: {
         companyId: 1,
         name: "Updated Company",
@@ -46,7 +46,7 @@ describe("updateCompanyController", () => {
     );
 
     const { req, res } = createMocks({
-      method: "POST",
+      method: "PUT",
       body: {
         companyId: 1,
         name: "Updated Company",
@@ -78,7 +78,7 @@ describe("updateCompanyController", () => {
     (updateCompanyService as jest.Mock).mockResolvedValue(mockUpdatedCompany);
 
     const { req, res } = createMocks({
-      method: "POST",
+      method: "PUT",
       body: {
         companyId: 1,
         name: "Updated Company",
@@ -101,7 +101,7 @@ describe("updateCompanyController", () => {
     );
 
     const { req, res } = createMocks({
-      method: "POST",
+      method: "PUT",
       body: {
         companyId: 1,
         name: "Updated Company",

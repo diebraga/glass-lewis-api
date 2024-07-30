@@ -17,15 +17,12 @@ export const updateCompanyService = async ({
   isin,
   website_url,
 }: UpdateCompanyParams) => {
-  console.log("Service: Updating company with ID:", companyId);
-
   const isinResult = await pool.query(
     "SELECT * FROM companies WHERE isin = $1 AND id != $2 LIMIT 1",
     [isin, companyId]
   );
 
   if (isinResult.rows.length > 0) {
-    console.error("Service: ISIN conflict found");
     throw new Error("Company with this ISIN already exists!");
   }
 
@@ -37,10 +34,8 @@ export const updateCompanyService = async ({
   );
 
   if (updateCompanyResult.rows.length === 0) {
-    console.error("Service: Company not found");
     throw new Error("Company not found!");
   }
 
-  console.log("Service: Company updated successfully");
   return updateCompanyResult.rows[0];
 };

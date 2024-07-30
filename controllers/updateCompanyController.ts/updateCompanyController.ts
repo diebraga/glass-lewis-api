@@ -13,10 +13,6 @@ export const updateCompanyController = async (
     req.body;
 
   try {
-    console.log(
-      "Controller: Received update request for company ID:",
-      companyId
-    );
 
     const result = await updateCompanyService({
       companyId,
@@ -27,7 +23,6 @@ export const updateCompanyController = async (
       website_url,
     });
 
-    console.log("Controller: Update successful");
     return res.status(200).json(result);
   } catch (error: any) {
 

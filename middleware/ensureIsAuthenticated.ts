@@ -11,7 +11,6 @@ export const ensureIsAuthenticated = (handler: any) => {
 
     const tokenParts = authToken.split(" ");
     if (tokenParts.length !== 2 || tokenParts[0] !== "Bearer") {
-      console.log("Invalid token format.");
       return res.status(401).json({ errorCode: "invalid token format" });
     }
 
@@ -23,7 +22,6 @@ export const ensureIsAuthenticated = (handler: any) => {
       req.user_id = sub as string;
       return handler(req, res);
     } catch (error: any) {
-      console.log("Token verification failed:", error.message);
       return res.status(401).json({ errorCode: "token expired" });
     }
   };
