@@ -10,17 +10,17 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 The `pages/api` directory is mapped to `/api/*`. Files in this directory are serverless api routes.
 
-# .env.local.example
+## .env.local.example
 
-# The connection string for your PostgreSQL database.
+The connection string for your PostgreSQL database.
 
-# Replace 'your_database_url' with the actual URL to your PostgreSQL database.
+Replace 'your_database_url' with the actual URL to your PostgreSQL database.
 
 DATABASE_URL=your_database_url
 
-# The secret key for signing JWT tokens.
+The secret key for signing JWT tokens.
 
-# Replace 'your_jwt_secret' with a strong secret key.
+Replace 'your_jwt_secret' with a strong secret key.
 
 JWT_SECRET=your_jwt_secret
 
@@ -36,3 +36,20 @@ If you wish to initialize or reset the database, run the following command:
 
 ```sh
 node sqlresetDb.ts
+```
+## Tests
+
+To run the tests, you can use the following scripts defined in your package.json:
+
+•	Run tests in watch mode: This command runs Jest in watch mode, which means tests will rerun automatically when you make changes to the files.
+
+```sh
+npm run test:watch
+```
+
+•	Run tests and generate coverage report: This command runs all the tests and generates a coverage report.
+
+
+```sh
+npm run coverage
+```
