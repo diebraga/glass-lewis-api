@@ -10,25 +10,20 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 The `pages/api` directory is mapped to `/api/*`. Files in this directory are serverless api routes.
 
-## .env.local.example
+## Environment Variables
 
-The connection string for your PostgreSQL database.
+Make sure to set the following environment variables in your `.env.local` file:
 
-Replace 'your_database_url' with the actual URL to your PostgreSQL database.
-
-DATABASE_URL=your_database_url
-
-The secret key for signing JWT tokens.
-
-Replace 'your_jwt_secret' with a strong secret key.
-
-JWT_SECRET=your_jwt_secret
+```sh
+DATABASE_URL=
+JWT_SECRET=
+```
 
 ## Deployed
 
 You can access the deployed application at the following URL:
 
-<a href="https://literate-waddle-7pq6x56pv49hpq4q-3000.app.github.dev/">Deployed Application</a>
+<a href="https://literate-waddle-7pq6x56pv49hpq4q-3000.app.github.dev" target="_blank">Deployed Application</a>
 
 ## Database Initialization or Reset
 
@@ -53,3 +48,7 @@ npm run test:watch
 ```sh
 npm run coverage
 ```
+
+## Documentation
+
+<a href="https://literate-waddle-7pq6x56pv49hpq4q-3000.app.github.dev/docs" target="_blank">Click to view API docs</a>
