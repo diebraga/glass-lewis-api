@@ -49,6 +49,8 @@ npm run test:watch
 npm run coverage
 ```
 
+<img width="745" alt="image" src="https://github.com/user-attachments/assets/1cafc6b2-984d-4b4b-91a3-dff717cd8f22">
+
 ## Documentation
 
 <a href="https://literate-waddle-7pq6x56pv49hpq4q-3000.app.github.dev/docs" target="_blank">Click to view API docs</a>
