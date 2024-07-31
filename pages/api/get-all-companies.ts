@@ -5,7 +5,8 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   await runCorsMiddleware(req, res, cors);
+  
   await getAllCompaniesController(req, res);
 };
 
-export default ensureIsAuthenticated(handler);
+export default handler;
