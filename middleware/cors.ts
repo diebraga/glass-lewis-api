@@ -3,7 +3,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 export const cors = Cors({
   methods: ["GET", "HEAD", "POST", "PUT"],
-  origin: true,
+  origin: '*',  
   optionsSuccessStatus: 200,
 });
 
