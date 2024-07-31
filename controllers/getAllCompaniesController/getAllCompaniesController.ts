@@ -5,6 +5,9 @@ export const getAllCompaniesController = async (
   req: NextApiRequest,
   res: NextApiResponse
 ) => {
+  if (req.method !== "GET") {
+    return res.status(405).end();
+  }
   try {
     const companies = await getAllCompaniesService();
     return res.status(200).json(companies);

@@ -5,6 +5,10 @@ export const getCompanyByIsinController = async (
   req: NextApiRequest,
   res: NextApiResponse
 ) => {
+  if (req.method !== "GET") {
+    return res.status(405).end();
+  }
+
   const { isin } = req.query;
 
   const service = getCompanyByIsinService;
